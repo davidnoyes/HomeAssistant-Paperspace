@@ -5,7 +5,7 @@ import logging
 import requests
 import voluptuous as vol
 
-from homeassistant.const import CONF_ACCESS_TOKEN, Platform
+from homeassistant.const import CONF_API_KEY, Platform
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 PAPERSPACE_PLATFORMS = [Platform.BINARY_SENSOR]
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.Schema({vol.Required(CONF_ACCESS_TOKEN): cv.string})},
+    {DOMAIN: vol.Schema({vol.Required(CONF_API_KEY): cv.string})},
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -27,9 +27,9 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the Paperspace component."""
 
     conf = config[DOMAIN]
-    access_token = conf[CONF_ACCESS_TOKEN]
+    api_key = conf[CONF_API_KEY]
 
-    paperspace = Paperspace(access_token)
+    paperspace = Paperspace(api_key)
 
     hass.data[DATA_PAPERSPACE] = paperspace
 
@@ -39,17 +39,17 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
 class Paperspace:
     """Handle all communication with the Paperspace API."""
 
-    def __init__(self, access_token):
+    def __init__(self, api_key):
         """Initialize the Paperspace connection."""
 
-        self.access_token = access_token
+        self.api_key = api_key
         self.machines = self._machines()
 
     def _machines(self):
         """List information about all machines available to either the current authenticated user or the team."""
         path = PAPERSPACE_URL + "machines/getMachines"
         headers = {
-            "X-API-Key": self.access_token,
+            "X-API-Key": self.api_key,
             "ps_client_name": "homeassistant-paperspace",
         }
         params = None
@@ -69,7 +69,7 @@ class Paperspace:
         """Start Paperspace machine."""
         path = PAPERSPACE_URL + "machines/" + machine_id + "/start"
         headers = {
-            "X-API-Key": self.access_token,
+            "X-API-Key": self.api_key,
             "ps_client_name": "homeassistant-paperspace",
         }
         params = None
@@ -83,7 +83,7 @@ class Paperspace:
         """Stop Paperspace machine."""
         path = PAPERSPACE_URL + "machines/" + machine_id + "/stop"
         headers = {
-            "X-API-Key": self.access_token,
+            "X-API-Key": self.api_key,
             "ps_client_name": "homeassistant-paperspace",
         }
         params = None
