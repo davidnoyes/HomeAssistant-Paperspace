@@ -2,7 +2,7 @@
   "domain": "paperspace",
   "name": "Paperspace",
   "documentation": "https://github.com/davidnoyes/HomeAssistant-Paperspace/",
-  "issues": "https://github.com/davidnoyes/HomeAssistant-Paperspace/issues",
+  "issue_tracker": "https://github.com/davidnoyes/HomeAssistant-Paperspace/issues",
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},
