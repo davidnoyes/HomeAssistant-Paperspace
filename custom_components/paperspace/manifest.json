@@ -1,0 +1,14 @@
+{
+  "domain": "paperspace",
+  "name": "Paperspace",
+  "documentation": "https://github.com/davidnoyes/HomeAssistant-Paperspace/",
+  "issue_tracker": "https://github.com/davidnoyes/HomeAssistant-Paperspace/issues",
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": ["@davidnoyes"],
+  "iot_class": "cloud_polling",
+  "loggers": ["paperspace"],
+  "version": "0.0.1"
+}
