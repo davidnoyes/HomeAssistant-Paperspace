@@ -2,20 +2,20 @@
 import json
 import logging
 
+from homeassistant.const import CONF_API_KEY, Platform  # pylint: disable=import-error
+from homeassistant.core import HomeAssistant  # pylint: disable=import-error
+from homeassistant.helpers import discovery  # pylint: disable=import-error
+import homeassistant.helpers.config_validation as cv  # pylint: disable=import-error
+from homeassistant.helpers.typing import ConfigType  # pylint: disable=import-error
+from homeassistant.util import Throttle  # pylint: disable=import-error
 import requests
 import voluptuous as vol
-
-from homeassistant.const import CONF_API_KEY, Platform
-from homeassistant.core import HomeAssistant
-import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.typing import ConfigType
-from homeassistant.util import Throttle
 
 from .const import DATA_PAPERSPACE, DOMAIN, MIN_TIME_BETWEEN_UPDATES, PAPERSPACE_URL
 
 _LOGGER = logging.getLogger(__name__)
 
-PAPERSPACE_PLATFORMS = [Platform.BINARY_SENSOR]
+PAPERSPACE_PLATFORMS = [Platform.BINARY_SENSOR, Platform.SWITCH]
 
 CONFIG_SCHEMA = vol.Schema(
     {DOMAIN: vol.Schema({vol.Required(CONF_API_KEY): cv.string})},
@@ -32,6 +32,9 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     paperspace = Paperspace(api_key)
 
     hass.data[DATA_PAPERSPACE] = paperspace
+
+    for platform in PAPERSPACE_PLATFORMS:
+        discovery.load_platform(hass, platform, DOMAIN, {}, config)
 
     return True
 
