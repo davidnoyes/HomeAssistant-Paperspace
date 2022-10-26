@@ -4,13 +4,18 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from homeassistant.components.binary_sensor import (
+from homeassistant.components.binary_sensor import (  # pylint: disable=import-error
     BinarySensorDeviceClass,
     BinarySensorEntity,
 )
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+from homeassistant.core import HomeAssistant  # pylint: disable=import-error
+from homeassistant.helpers.entity_platform import (  # pylint: disable=import-error
+    AddEntitiesCallback,
+)
+from homeassistant.helpers.typing import (  # pylint: disable=import-error
+    ConfigType,
+    DiscoveryInfoType,
+)
 
 from .const import (
     ATTR_AGENT_TYPE,
